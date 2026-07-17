@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Risk Assessment Request</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <div class="web-top-bar"><span>Logged in as: </span><strong>Guest </strong>| <a class="logout-btn" href="/logout">Logout</a></div>
+    <div class="search-section" style="width: var(--paper-width); margin: 0 auto 20px auto; background: white; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); box-sizing: border-box;">
+      <form action="/form" method="GET" style="display: flex; gap: 10px; align-items: center;">
+        <label class="bold" for="clientSearch">Pull Client Data:</label>
+        <input id="clientSearch" type="text" name="clientName" placeholder="Enter full name (e.g., John Doe)" style="flex: 1; padding: 5px; border: 1px solid #ccc; font-size: 14px;">
+        <button type="submit" style="background: #475569; color: white; border: none; padding: 6px 15px; cursor: pointer; font-weight: bold; border-radius: 3px;">Search</button>
+      </form>
+    </div>
+    <form id="craForm" action="/submit" method="POST">
+      <div class="page">
+        <div class="pdf-header">
+          <div class="header-top-row">
+            <div class="logo-container"><img class="manitoba-logo" src="/images/manitoba-wordmark-1300t385.png" alt="Manitoba Logo"/>
+              <div class="families-text">Families</div>
+            </div>
+            <div class="title-container">
+              <div class="title-line">CRIMINAL RISK ASSESSMENT</div>
+              <div class="title-line">REQUEST</div>
+            </div>
+          </div>
+          <div class="address-block">
+            <p>MANITOBA FAMILIES - CRIMINAL RISK ASSESSMENT UNIT</p>
+            <p>Child Protection Branch</p>
+            <p>201 - 114 Garry Street</p>
+            <p>Winnipeg, Manitoba R3C 4V5</p>
+          </div>
+        </div>
+        <div class="bordered-section">
+          <div class="doc-title">CONSENT FOR CRIMINAL RISK ASSESSMENT AND RELEASE OF INFORMATION</div>
+          <div class="legal-text">As a person who has, or may have, care, custody, control or charge of a child in receipt of services under <i>The Child and Family Services Act</i>, I authorize the Criminal Risk Assessment Unit of Manitoba Families’ Child Protection Branch ("CRAU") to conduct enquiries of the Winnipeg Police Service (WPS), the RCMP and other law enforcement agencies necessary to assess the risk that I may endanger the life, health or emotional wellbeing of a child. I understand that this information is requested by (CFS Agency) for the purposes of, and in accordance with, s. 18.4(1.1) of <i>The Child and Family Services Act</i>, and may include a criminal record, criminal and Provincial Act convictions, orders or charges, other involvement/contact with law enforcement (including non-conviction information) or other information. I authorize the disclosure of said information to CRAU and an authorized Child and Family Services Agency designate or designates. I also authorize the disclosure of the personal identifying information set out below to CRAU, the WPS, RCMP and other law enforcement agencies for the purpose of completing a Criminal Risk Assessment. I understand that the results of this Criminal Risk Assessment are confidential, and may not be provided to me, but may be disclosed in accordance with s.76 of the <i>Child and Family Services Act</i>.</div>
+          <div class="consent-grid">
+            <div class="consent-field">
+              <label for="consent_date">Date:</label>
+              <input class="date-mask" id="consent_date" type="text" name="consent_date" placeholder="DD/MM/YYYY" maxlength="10" required>
+            </div>
+            <div class="consent-field">
+              <label for="signature_assessed">Signature of person being assessed:</label>
+              <input id="signature_assessed" type="text" name="signature_assessed" required>
+            </div>
+            <div class="consent-field" style="align-items: center;">
+              <label>
+                <input id="unconsented_check" type="checkbox" name="unconsented_check" value="unconsented" style="margin-right: 5px;">Unconsented
+              </label>
+            </div>
+            <div class="consent-field" id="witness_signature_container">
+              <label for="witness_signature">Witness (if consenting):</label>
+              <input id="witness_signature" type="text" name="witness_signature" required>
+            </div>
+          </div>
+        </div>
+        <div class="bold text-center underline" style="margin-top:20px; font-size: 14px; margin-bottom:15px;">PLEASE PRINT CLEARLY</div>
+        <div class="field-row compact">
+          <label for="first_name">1. FIRST NAME:</label>
+          <input id="first_name" type="text" name="first_name" value="" required>
+        </div>
+        <div class="field-row compact">
+          <label for="second_name">2. SECOND NAME:</label>
+          <input id="second_name" type="text" name="second_name" value="">
+        </div>
+        <div class="field-row compact">
+          <label for="last_name">3. LAST NAME:</label>
+          <input id="last_name" type="text" name="last_name" value="" required>
+        </div>
+        <div class="field-row compact">
+          <label for="dob">4. DATE OF BIRTH:</label>
+          <input class="date-mask" id="dob" type="text" name="dob" placeholder="DD/MM/YYYY" maxlength="10" value="" style="max-width: 150px;" required>
+          <label style="margin-left: 20px;">5. </label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="gender" value="male">MALE
+            </label>
+            <label>
+              <input type="radio" name="gender" value="female">FEMALE
+            </label>
+            <label>
+              <input type="radio" name="gender" value="other">OTHER
+            </label>
+          </div>
+        </div>
+        <div class="field-row compact">
+          <label for="other_last_names">6. OTHER LAST NAMES USED:</label>
+          <input id="other_last_names" type="text" name="other_last_names">
+        </div>
+        <div class="field-row compact">
+          <label for="other_first_names">7. OTHER FIRST NAMES USED/ALSO GOES BY:</label>
+          <input id="other_first_names" type="text" name="other_first_names">
+        </div>
+        <div class="field-row compact">
+          <label for="address">8. CURRENT ADDRESS (include postal code):</label>
+          <input id="address" type="text" name="address">
+        </div>
+        <div class="field-row compact">
+          <label for="phone_1">9. CURRENT PH#s:</label>
+          <input class="phone-mask" id="phone_1" type="tel" name="phone_1" maxlength="10" placeholder="10 Digits" style="max-width:200px;" required><span style="font-size: 11px; margin-left:10px;">Add another?</span>
+          <div class="radio-group" style="margin-left: 5px;">
+            <label>
+              <input type="radio" name="add_phone_2" value="yes">Yes
+            </label>
+            <label>
+              <input type="radio" name="add_phone_2" value="no" checked>No
+            </label>
+          </div>
+        </div>
+        <div class="field-row compact hidden" id="screen_4_2">
+          <label for="phone_2" style="visibility:hidden;">9. CURRENT PH#s:</label>
+          <input class="phone-mask" id="phone_2" type="tel" name="phone_2" maxlength="10" placeholder="10 Digits" style="max-width:200px;">
+        </div>
+        <div class="field-row compact">
+          <label for="birth_place">10. City/Province or Country of Birth:</label>
+          <input id="birth_place" type="text" name="birth_place">
+        </div>
+        <div class="pdf-footer">
+          <div class="footer-content"><span>Criminal Risk Assessment Request Revision date: 2025-01-10</span><span>1</span></div>
+        </div>
+      </div>
+      <div class="page">
+        <div class="pdf-header">
+          <div class="header-top-row">
+            <div class="logo-container"><img class="manitoba-logo" src="/images/manitoba-wordmark-1300t385.png" alt="Manitoba Logo"/>
+              <div class="families-text">Families</div>
+            </div>
+            <div class="title-container">
+              <div class="title-line">CRIMINAL RISK ASSESSMENT</div>
+              <div class="title-line">REQUEST</div>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <label class="bold">NAME OF PERSON BEING ASSESSED:</label>
+          <input id="person_name_display" type="text" name="person_name_display" readonly value="">
+        </div>
+        <div class="legal-text">
+          <p class="bold">IT IS IMPORTANT THAT THE CFS AGENCY DESIGNATE READS AND UNDERSTANDS THE FOLLOWING:</p>
+          <p>The identifying information supplied on page 1 will be researched through the Canadian Police Information Centre (CPIC) and Winnipeg Police Service Records Management System (NICHE). The research will NOT include a vulnerable sector search or information in respect of pardons, which information may impact the results of a risk assessment. Criminal Convictions are strictly confidential and cannot be shared without written authorization of the person involved. Personal Information is governed under Section 8 of the Privacy Act (Federal Statute). </p>
+          <p class="bold">PLEASE NOTE <span>that record information is based on </span><span class="underline">NAME AND DATE OF BIRTH SEARCH ONLY </span><span>and does not necessarily indicate subject involvement. Verification can only be provided through the submission of fingerprints to the local law enforcement agency for the area in which the person being assessed resides. In the case of dispute regarding the identity of the person being assessed, that person is advised to attend any RCMP Detachment; Winnipeg Police Service, 245 Smith Street, Winnipeg, Manitoba; Brandon Police Service, 1340 10th Street, Brandon, Manitoba; or local Police Agency. A fee for service is required.</span></p>
+        </div>
+        <div class="bold" style="margin-bottom: 10px;">NOTE – SECTIONS MARKED WITH AN ASTERISK (*) ARE REQUIRED</div>
+        <div class="field-row">
+          <label class="bold" for="agency_name">*NAME OF AGENCY SUBMITTING REQUEST:</label>
+          <input id="agency_name" type="text" name="agency_name" required>
+        </div>
+        <div class="field-row">
+          <label class="bold">*REASON FOR RISK ASSESSMENT:</label>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; align-items: center; gap: 10px;"><span>With or Without Consent:</span>
+              <label>Child Protection Concerns
+                <input type="checkbox" name="reason" value="child_protection">
+              </label>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;"><span>Must have consent:</span>
+              <label>Place of Safety
+                <input type="checkbox" name="reason" value="place_of_safety">
+              </label>
+              <label>Kinship or Customary Care Agreement
+                <input type="checkbox" name="reason" value="kinship">
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <label class="bold" for="assigned_worker">*ASSIGNED WORKER:</label>
+          <input id="assigned_worker" type="text" name="assigned_worker" required>
+        </div>
+        <div class="field-row">
+          <label class="bold" for="last_assessment_date">DATE OF LAST CRIMINAL RISK ASSESSMENT (if known):</label>
+          <input class="date-mask" id="last_assessment_date" type="text" name="last_assessment_date" placeholder="DD/MM/YYYY" maxlength="10">
+        </div>
+        <div class="field-row">
+          <label class="bold" for="submitting_designate">*SUBMITTING DESIGNATE:</label>
+          <input id="submitting_designate" type="text" name="submitting_designate" value="" readonly required>
+        </div>
+        <div class="field-row">
+          <label class="bold" for="designate_ph">*DESIGNATE PH#:</label>
+          <input class="phone-mask" id="designate_ph" type="tel" name="designate_phone" maxlength="10" style="max-width:150px;" required>
+          <label class="bold" for="designate_email">*DESIGNATE EMAIL#:</label>
+          <input id="designate_email" type="email" name="designate_email" style="max-width:150px;" required>
+        </div>
+        <div class="field-row">
+          <label class="bold" for="designate_fax">DESIGNATE FAX#:</label>
+          <input class="phone-mask" id="designate_fax" type="tel" name="designate_fax" maxlength="10" style="max-width:150px;">
+        </div>
+        <div class="field-row">
+          <label class="bold" for="request_date">*REQUEST DATE:</label>
+          <input class="date-mask" id="request_date" type="text" name="request_date" placeholder="DD/MM/YYYY" maxlength="10" style="max-width: 150px;" required>
+        </div>
+        <div class="pdf-footer">
+          <div class="note">NOTE: The assessment completed by the Criminal Risk Assessment Unit of the Department of Families Child Protection Branch does not replace a criminal records check.</div>
+          <div class="footer-content"><span>Criminal Risk Assessment Request Revision date: 2025-01-10</span><span>2</span></div>
+        </div>
+      </div>
+      <div class="submit-section">
+        <button class="btn-submit" type="submit">Submit Document</button>
+      </div>
+    </form>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

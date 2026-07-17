@@ -1,0 +1,57 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Login - Criminal Risk Assessment
+    style.
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #fdfdfc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .login-container {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border: 1px solid #d1d5db;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+      h2 { color: #1f2937; margin-bottom: 5px; }
+      p { color: #6b7280; margin-bottom: 25px; font-size: 0.9rem; }
+      .form-group { margin-bottom: 15px; text-align: left; }
+      label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+      input[type="text"], input[type="password"] {
+        width: 100%; padding: 10px; border: 1px solid #d1d5db;
+        border-radius: 4px; box-sizing: border-box;
+      }
+      .btn-submit {
+        background-color: #2563eb; color: white; border: none;
+        padding: 12px; font-size: 1rem; border-radius: 4px;
+        cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px;
+      }
+      .btn-submit:hover { background-color: #1d4ed8; }
+      .error { color: #dc2626; font-size: 0.85rem; margin-bottom: 15px; }
+  body
+    .login-container
+      h2 Manitoba Families
+      p CFS Agency Secure Login
+      
+      if error
+        .error= error
+
+      form(action="/login", method="POST")
+        .form-group
+          label(for="username") Worker ID / Username:
+          input#username(type="text", name="username", required)
+        .form-group
+          label(for="password") Password:
+          input#password(type="password", name="password", required)
+        button.btn-submit(type="submit") Log In

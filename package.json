@@ -1,0 +1,16 @@
+{
+  "name": "criminal-risk-assessment-form",
+  "version": "1.0.0",
+  "description": "Node.js Express App for Criminal Risk Assessment form with Pug",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "pug": "^3.0.2",
+    "puppeteer": "^25.3.0"
+  }
+}

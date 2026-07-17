@@ -1,0 +1,7 @@
+mixin pdfFooter(pageNumber, showNote)
+  .pdf-footer
+    if showNote
+      .note NOTE: The assessment completed by the Criminal Risk Assessment Unit of the Department of Families Child Protection Branch does not replace a criminal records check.
+    .footer-content
+      span Criminal Risk Assessment Request Revision date: 2025-01-10
+      span= pageNumber

@@ -1,0 +1,169 @@
+extends layout
+include mixins/header
+include mixins/footer
+
+block content
+  .web-top-bar
+    span Logged in as: 
+    strong #{user ? user.username : 'Guest'} 
+    | | 
+    a.logout-btn(href="/logout") Logout
+
+  //- --- CLIENT SEARCH SECTION ---
+  .search-section(style="width: var(--paper-width); margin: 0 auto 20px auto; background: white; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); box-sizing: border-box;")
+    form(action="/form", method="GET", style="display: flex; gap: 10px; align-items: center;")
+      label.bold(for="clientSearch") Pull Client Data:
+      input#clientSearch(type="text", name="clientName", value=searchQuery, placeholder="Enter full name (e.g., John Doe)", style="flex: 1; padding: 5px; border: 1px solid #ccc; font-size: 14px;")
+      button(type="submit", style="background: #475569; color: white; border: none; padding: 6px 15px; cursor: pointer; font-weight: bold; border-radius: 3px;") Search
+    
+    //- Display Success or Error Message
+    if searchMessage
+      div(style="margin-top: 10px; font-weight: bold; font-size: 13px; color: " + (client ? "green" : "red") + ";")= searchMessage
+
+  //- --- MAIN FORM ---
+  form#craForm(action="/submit", method="POST")
+    .page
+      +pdfHeader(true)
+      .bordered-section
+        .doc-title CONSENT FOR CRIMINAL RISK ASSESSMENT AND RELEASE OF INFORMATION
+        .legal-text
+          | As a person who has, or may have, care, custody, control or charge of a child in receipt of services under 
+          i The Child and Family Services Act
+          | , I authorize the Criminal Risk Assessment Unit of Manitoba Families’ Child Protection Branch ("CRAU") to conduct enquiries of the Winnipeg Police Service (WPS), the RCMP and other law enforcement agencies necessary to assess the risk that I may endanger the life, health or emotional wellbeing of a child. I understand that this information is requested by (CFS Agency) for the purposes of, and in accordance with, s. 18.4(1.1) of 
+          i The Child and Family Services Act
+          | , and may include a criminal record, criminal and Provincial Act convictions, orders or charges, other involvement/contact with law enforcement (including non-conviction information) or other information. I authorize the disclosure of said information to CRAU and an authorized Child and Family Services Agency designate or designates. I also authorize the disclosure of the personal identifying information set out below to CRAU, the WPS, RCMP and other law enforcement agencies for the purpose of completing a Criminal Risk Assessment. I understand that the results of this Criminal Risk Assessment are confidential, and may not be provided to me, but may be disclosed in accordance with s.76 of the 
+          i Child and Family Services Act
+          | .
+        .consent-grid
+          .consent-field
+            label(for="consent_date") Date:
+            input#consent_date(type="text", name="consent_date", class="date-mask", placeholder="DD/MM/YYYY", maxlength="10", required)
+          .consent-field
+            label(for="signature_assessed") Signature of person being assessed:
+            input#signature_assessed(type="text", name="signature_assessed", required)
+          .consent-field(style="align-items: center;")
+            label
+              input#unconsented_check(type="checkbox", name="unconsented_check", value="unconsented", style="margin-right: 5px;")
+              | Unconsented
+          .consent-field#witness_signature_container
+            label(for="witness_signature") Witness (if consenting):
+            input#witness_signature(type="text", name="witness_signature", required)
+
+      .bold.text-center.underline(style="margin-top:20px; font-size: 14px; margin-bottom:15px;") PLEASE PRINT CLEARLY
+      
+      .field-row.compact
+        label(for="first_name") 1. FIRST NAME:
+        input#first_name(type="text", name="first_name", value=(client ? client.firstName : ''), required)
+      .field-row.compact
+        label(for="second_name") 2. SECOND NAME:
+        input#second_name(type="text", name="second_name", value=(client ? client.secondName : ''))
+      .field-row.compact
+        label(for="last_name") 3. LAST NAME:
+        input#last_name(type="text", name="last_name", value=(client ? client.lastName : ''), required)
+      .field-row.compact
+        label(for="dob") 4. DATE OF BIRTH:
+        input#dob(type="text", name="dob", class="date-mask", placeholder="DD/MM/YYYY", maxlength="10", value=(client ? client.dob : ''), style="max-width: 150px;", required)
+        label(style="margin-left: 20px;") 5. 
+        .radio-group
+          label
+            input(type="radio", name="gender", value="male", checked=(client && client.gender === 'male'))
+            | MALE
+          label
+            input(type="radio", name="gender", value="female", checked=(client && client.gender === 'female'))
+            | FEMALE
+          label
+            input(type="radio", name="gender", value="other", checked=(client && client.gender === 'other'))
+            | OTHER
+      .field-row.compact
+        label(for="other_last_names") 6. OTHER LAST NAMES USED:
+        input#other_last_names(type="text", name="other_last_names")
+      .field-row.compact
+        label(for="other_first_names") 7. OTHER FIRST NAMES USED/ALSO GOES BY:
+        input#other_first_names(type="text", name="other_first_names")
+      .field-row.compact
+        label(for="address") 8. CURRENT ADDRESS (include postal code):
+        input#address(type="text", name="address")
+      .field-row.compact
+        label(for="phone_1") 9. CURRENT PH#s:
+        input#phone_1(type="tel", name="phone_1", class="phone-mask", maxlength="10", placeholder="10 Digits", style="max-width:200px;", required)
+        span(style="font-size: 11px; margin-left:10px;") Add another?
+        .radio-group(style="margin-left: 5px;")
+          label
+            input(type="radio", name="add_phone_2", value="yes")
+            | Yes
+          label
+            input(type="radio", name="add_phone_2", value="no", checked)
+            | No
+      .field-row.compact.hidden#screen_4_2
+        label(for="phone_2" style="visibility:hidden;") 9. CURRENT PH#s:
+        input#phone_2(type="tel", name="phone_2", class="phone-mask", maxlength="10", placeholder="10 Digits", style="max-width:200px;")
+      .field-row.compact
+        label(for="birth_place") 10. City/Province or Country of Birth:
+        input#birth_place(type="text", name="birth_place")
+      
+      +pdfFooter(1, false)
+
+    .page
+      +pdfHeader(false)
+      .field-row
+        label.bold NAME OF PERSON BEING ASSESSED:
+        input#person_name_display(type="text", name="person_name_display", readonly, value=(client ? client.firstName + ' ' + client.lastName : ''))
+      
+      .legal-text
+        p.bold IT IS IMPORTANT THAT THE CFS AGENCY DESIGNATE READS AND UNDERSTANDS THE FOLLOWING:
+        p The identifying information supplied on page 1 will be researched through the Canadian Police Information Centre (CPIC) and Winnipeg Police Service Records Management System (NICHE). The research will NOT include a vulnerable sector search or information in respect of pardons, which information may impact the results of a risk assessment. Criminal Convictions are strictly confidential and cannot be shared without written authorization of the person involved. Personal Information is governed under Section 8 of the Privacy Act (Federal Statute). 
+        p.bold PLEASE NOTE 
+          span that record information is based on 
+          span.underline NAME AND DATE OF BIRTH SEARCH ONLY 
+          span and does not necessarily indicate subject involvement. Verification can only be provided through the submission of fingerprints to the local law enforcement agency for the area in which the person being assessed resides. In the case of dispute regarding the identity of the person being assessed, that person is advised to attend any RCMP Detachment; Winnipeg Police Service, 245 Smith Street, Winnipeg, Manitoba; Brandon Police Service, 1340 10th Street, Brandon, Manitoba; or local Police Agency. A fee for service is required.
+
+      .bold(style="margin-bottom: 10px;") NOTE – SECTIONS MARKED WITH AN ASTERISK (*) ARE REQUIRED
+
+      .field-row
+        label.bold(for="agency_name") *NAME OF AGENCY SUBMITTING REQUEST:
+        input#agency_name(type="text", name="agency_name", required)
+      
+      .field-row
+        label.bold *REASON FOR RISK ASSESSMENT:
+        div(style="flex: 1; display: flex; flex-direction: column; gap: 5px;")
+          div(style="display: flex; align-items: center; gap: 10px;")
+            span With or Without Consent:
+            label Child Protection Concerns
+              input(type="checkbox", name="reason", value="child_protection")
+          div(style="display: flex; align-items: center; gap: 10px;")
+            span Must have consent:
+            label Place of Safety
+              input(type="checkbox", name="reason", value="place_of_safety")
+            label Kinship or Customary Care Agreement
+              input(type="checkbox", name="reason", value="kinship")
+
+      .field-row
+        label.bold(for="assigned_worker") *ASSIGNED WORKER:
+        input#assigned_worker(type="text", name="assigned_worker", required)
+      
+      .field-row
+        label.bold(for="last_assessment_date") DATE OF LAST CRIMINAL RISK ASSESSMENT (if known):
+        input#last_assessment_date(type="text", name="last_assessment_date", class="date-mask", placeholder="DD/MM/YYYY", maxlength="10")
+
+      .field-row
+        label.bold(for="submitting_designate") *SUBMITTING DESIGNATE:
+        input#submitting_designate(type="text", name="submitting_designate", value=(user ? user.username : ''), readonly, required)
+      
+      .field-row
+        label.bold(for="designate_ph") *DESIGNATE PH#:
+        input#designate_ph(type="tel", name="designate_phone", class="phone-mask", maxlength="10", style="max-width:150px;", required)
+        label.bold(for="designate_email") *DESIGNATE EMAIL#:
+        input#designate_email(type="email", name="designate_email", style="max-width:150px;", required)
+      
+      .field-row
+        label.bold(for="designate_fax") DESIGNATE FAX#:
+        input#designate_fax(type="tel", name="designate_fax", class="phone-mask", maxlength="10", style="max-width:150px;")
+      
+      .field-row
+        label.bold(for="request_date") *REQUEST DATE:
+        input#request_date(type="text", name="request_date", class="date-mask", placeholder="DD/MM/YYYY", maxlength="10", style="max-width: 150px;", required)
+
+      +pdfFooter(2, true)
+
+    .submit-section
+      button.btn-submit(type="submit") Submit Document

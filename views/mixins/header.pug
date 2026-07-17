@@ -1,0 +1,15 @@
+mixin pdfHeader(includeAddress)
+  .pdf-header
+    .header-top-row
+      .logo-container
+        img.manitoba-logo(src="/images/manitoba-wordmark-1300t385.png", alt="Manitoba Logo")
+        .families-text Families
+      .title-container
+        .title-line CRIMINAL RISK ASSESSMENT
+        .title-line REQUEST
+    if includeAddress
+      .address-block
+        p MANITOBA FAMILIES - CRIMINAL RISK ASSESSMENT UNIT
+        p Child Protection Branch
+        p 201 - 114 Garry Street
+        p Winnipeg, Manitoba R3C 4V5
